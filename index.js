@@ -7,24 +7,16 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    View,
-    ViewPropTypes,
-    Image,
-    Text,
-    TouchableHighlight
-} from 'react-native';
-import PropTypes from 'prop-types';
-
+import React, { Component } from "react";
+import { StyleSheet, View, ViewPropTypes, Image, Text, TouchableHighlight } from "react-native";
+import PropTypes from "prop-types";
 
 export default class CheckBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isChecked: this.props.isChecked,
-        }
+            isChecked: this.props.isChecked
+        };
     }
     static propTypes = {
         ...(ViewPropTypes || View.PropTypes),
@@ -42,14 +34,14 @@ export default class CheckBox extends Component {
         checkBoxColor: PropTypes.string,
         checkedCheckBoxColor: PropTypes.string,
         uncheckedCheckBoxColor: PropTypes.string,
-        disabled: PropTypes.bool,
-    }
+        disabled: PropTypes.bool
+    };
     static defaultProps = {
         isChecked: false,
         isIndeterminate: false,
         leftTextStyle: {},
         rightTextStyle: {}
-    }
+    };
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (prevState.isChecked !== nextProps.isChecked) {
@@ -63,26 +55,22 @@ export default class CheckBox extends Component {
         const checkboxState = !this.state.isChecked;
         this.setState({
             isChecked: checkboxState
-        })
+        });
         this.props.onClick(checkboxState);
     }
     _renderLeft() {
-        if (this.props.leftTextView)return this.props.leftTextView;
-        if (!this.props.leftText)return null;
-        return (
-            <Text style={[styles.leftText, this.props.leftTextStyle]}>{this.props.leftText}</Text>
-        );
+        if (this.props.leftTextView) return this.props.leftTextView;
+        if (!this.props.leftText) return null;
+        return <Text style={[styles.leftText, this.props.leftTextStyle]}>{this.props.leftText}</Text>;
     }
     _renderRight() {
-        if (this.props.rightTextView)return this.props.rightTextView;
-        if (!this.props.rightText)return null;
-        return (
-            <Text style={[styles.rightText, this.props.rightTextStyle]}>{this.props.rightText}</Text>
-        );
+        if (this.props.rightTextView) return this.props.rightTextView;
+        if (!this.props.rightText) return null;
+        return <Text style={[styles.rightText, this.props.rightTextStyle]}>{this.props.rightText}</Text>;
     }
 
     _renderImage() {
-        if (this.props.isIndeterminate){
+        if (this.props.isIndeterminate) {
             return this.props.indeterminateImage ? this.props.indeterminateImage : this.genCheckedImage();
         }
         if (this.state.isChecked) {
@@ -93,37 +81,36 @@ export default class CheckBox extends Component {
     }
 
     _getCheckedCheckBoxColor() {
-        return this.props.checkedCheckBoxColor ? this.props.checkedCheckBoxColor : this.props.checkBoxColor
+        return this.props.checkedCheckBoxColor ? this.props.checkedCheckBoxColor : this.props.checkBoxColor;
     }
 
     _getUncheckedCheckBoxColor() {
-        return this.props.uncheckedCheckBoxColor ? this.props.uncheckedCheckBoxColor : this.props.checkBoxColor
+        return this.props.uncheckedCheckBoxColor ? this.props.uncheckedCheckBoxColor : this.props.checkBoxColor;
     }
 
     _getTintColor() {
-        return this.state.isChecked ? this._getCheckedCheckBoxColor() :  this._getUncheckedCheckBoxColor()
+        return this.state.isChecked ? this._getCheckedCheckBoxColor() : this._getUncheckedCheckBoxColor();
     }
 
     genCheckedImage() {
         var source;
         if (this.props.isIndeterminate) {
-            source = require('./img/ic_indeterminate_check_box.png');
-        }
-        else {
-            source = this.state.isChecked ? require('./img/ic_check_box.png') : require('./img/ic_check_box_outline_blank.png');
+            source = require("./img/ic_indeterminate_check_box.png");
+        } else {
+            source = this.state.isChecked
+                ? require("./img/ic_check_box.png")
+                : require("./img/ic_check_box_outline_blank.png");
         }
 
-        return (
-            <Image source={source} style={{tintColor: this._getTintColor()}} />
-        );
+        return <Image source={source} style={{ tintColor: this._getTintColor() }} />;
     }
 
     render() {
         return (
             <TouchableHighlight
                 style={this.props.style}
-                onPress={()=>this.onClick()}
-                underlayColor='transparent'
+                onPress={() => this.onClick()}
+                underlayColor="transparent"
                 disabled={this.props.disabled}
             >
                 <View style={styles.container}>
@@ -137,14 +124,14 @@ export default class CheckBox extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        alignItems: 'center'
+        flexDirection: "row",
+        alignItems: "center"
     },
     leftText: {
-        flex: 1,
+        //flex: 1
     },
     rightText: {
-        flex: 1,
+        //flex: 1,
         marginLeft: 10
     }
 });
